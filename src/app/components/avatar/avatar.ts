@@ -48,7 +48,10 @@ export class AvatarComponent {
  // replica el valor actual para mostrarlo junto al avatar
  guardarNombre(){
    this.nombreGuardado.set(this.nombreInput());
- }
+  }
 
- 
+ // para alternar el estado de giro
+ toggleGiro(){
+   this.girando.update(v => !v);
+ }
 }

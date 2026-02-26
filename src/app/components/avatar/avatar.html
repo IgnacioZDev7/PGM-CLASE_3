@@ -71,9 +71,9 @@
     <!-- hace que el nombre aparezca debajo del avatar -->
     <button (click)="guardarNombre()">Guardar nombre</button>
     
-    <!--boton de giro-->+
-    <button>
-      
+    <!--boton de giro-->
+    <button (click)="toggleGiro()">
+      {{ girando() ? 'Detener' : 'Girar' }}
     </button>
 
   </div>
