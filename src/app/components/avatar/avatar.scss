@@ -1,19 +1,22 @@
+/* Contenedor principal: centra todo verticalmente */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: 'Segoe UI', sans-serif;
 
+  /* Área donde se dibuja el avatar, con altura fija para mantener el layout estable */
   .canvas-avatar {
     height: 350px;
     display: flex;
     align-items: center;
     justify-content: center;
 
+    /* El cuerpo circular del avatar */
     .cuerpo {
       border-radius: 50%;
       position: relative;
-      transition: all 0.3s ease;
+      transition: all 0.3s ease; /* Transición suave al cambiar tamaño o color */
       box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 
       .ojos {
@@ -29,6 +32,7 @@
           border: 2px solid black;
         }
 
+        /* Lentes: barra semitransparente que cubre ambos ojos */
         .lentes {
           position: absolute;
           top: 35%;
@@ -40,6 +44,7 @@
         }
       }
 
+      /* Boca: posicionada en la parte inferior del cuerpo */
       .boca {
         position: absolute;
         bottom: 20%;
@@ -52,8 +57,28 @@
         .serio { width: 30%; height: 5px; background: black; }
       }
     }
+
+    /* NUEVO: Clase que se agrega condicionalmente con [class.girando].
+       Aplica la animación 'girar' que rota el avatar 360° de forma continua.
+       'linear' = velocidad constante, 'infinite' = nunca se detiene hasta quitar la clase */
+    .cuerpo.girando {
+      animation: girar 1s linear infinite;
+    }
   }
 
+  /* NUEVO: Estilo para el nombre que aparece debajo del avatar.
+     El color se controla dinámicamente desde el template con [style.color].
+     min-height reserva espacio para evitar saltos de layout cuando no hay nombre */
+  .nombre-avatar {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    min-height: 1.5em;
+    margin: 0;
+    letter-spacing: 1px;
+  }
+
+  /* Panel de controles con grid para distribuir los elementos uniformemente */
   .controles {
     background: #f4f4f4;
     padding: 20px;
@@ -63,5 +88,24 @@
 
     label, p { font-weight: bold; font-size: 14px; }
     button { cursor: pointer; padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
+
+    /* NUEVO: Estilo para el input de texto del nombre */
+    input[type="text"] {
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
   }
+}
+
+/* NUEVO: Definición de la animación de rotación.
+   @keyframes define los estados inicio (from) y fin (to) de la animación.
+   rotate(360deg) hace una vuelta completa. Como tiene 'infinite' en la clase .girando,
+   esto se repite indefinidamente creando el efecto de giro continuo */
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

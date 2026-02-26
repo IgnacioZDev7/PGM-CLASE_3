@@ -1,43 +1,80 @@
+<!-- Contenedor principal del componente -->
 <div class="container">
   <h2>Avatar</h2>
+
+  <!-- Área visual donde se dibuja el avatar -->
   <div class="canvas-avatar">
+    <!-- -->
     <div class="cuerpo"
+         [class.girando]="girando()"
          [style.background-color]="colorFondo()"
          [style.width.px]="tamano()"
          [style.height.px]="tamano()">
 
+      <!-- Sección de los ojos -->
       <div class="ojos">
         <div class="ojo"></div>
         <div class="ojo"></div>
+        <!-- @if evalúa el signal tieneLentes(): si es true, renderiza los lentes -->
         @if (tieneLentes()){
           <div class="lentes"></div>
         }
       </div>
+
+      <!-- Sección de la boca: @switch evalúa tipoExpresion() y muestra la boca correspondiente -->
       <div class="boca">
         @switch (tipoExpresion()){
           @case (1) {<div class="feliz"></div>}
           @case (2) {<div class="sorprendido"></div>}
           @case (3) {<div class="serio"></div>}
         }
-        </div>
+      </div>
     </div>
   </div>
-<div class="controles">
-  <label color>
-     <input type="color" [value]="colorFondo()" (input)="cambiarColor($event)" >
-  </label>
 
-  <label Tamaño>
-    <input type="range" min="100" max="300" [value]="tamano()" (input)="cambiarTamano($event)" >
-  </label>
-  <button (click)="toggleLentes()">
-  {{tieneLentes()? 'Quitar lentes' : 'Poner lentes'}} (Boolean)
-  </button>
-  <div class="expresiones">
-   <p> Expresión </p>
-    <button (click)="setExpresion(1)">feliz</button>
-    <button (click)="setExpresion(2)">sorprendido</button>
-    <button (click)="setExpresion(3)">serio</button>
+  <!-- -->
+  <p class="nombre-avatar" [style.color]="colorFondo()">
+    {{ nombreGuardado() }}
+  </p>
+
+  <!-- Panel de controles -->
+  <div class="controles">
+
+    <!-- Control de color: input tipo color que emite el evento (input) al cambiar -->
+    <label>Color
+      <input type="color" [value]="colorFondo()" (input)="cambiarColor($event)" >
+    </label>
+
+    <!-- Control de tamaño: slider que va de 100 a 300 px -->
+    <label>Tamaño
+      <input type="range" min="100" max="300" [value]="tamano()" (input)="cambiarTamano($event)" >
+    </label>
+
+    <!-- Botón que alterna el estado de lentes (true/false) -->
+    <button (click)="toggleLentes()">
+      {{tieneLentes()? 'Quitar lentes' : 'Poner lentes'}} (Boolean)
+    </button>
+
+    <!-- Grupo de botones para cambiar la expresión facial -->
+    <div class="expresiones">
+      <p> Expresión </p>
+      <button (click)="setExpresion(1)">feliz</button>
+      <button (click)="setExpresion(2)">sorprendido</button>
+      <button (click)="setExpresion(3)">serio</button>
+    </div>
+
+    <!-- actualizando el signal del nombre-->
+    <label>Nombre
+      <input type="text" [value]="nombreInput()" (input)="cambiarNombre($event)" placeholder="Ingresa tu nombre">
+    </label>
+
+    <!-- hace que el nombre aparezca debajo del avatar -->
+    <button (click)="guardarNombre()">Guardar nombre</button>
+    
+    <!--boton de giro-->+
+    <button>
+      
+    </button>
+
   </div>
-</div >
 </div>
